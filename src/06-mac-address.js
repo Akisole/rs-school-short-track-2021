@@ -6,14 +6,55 @@
  * whether it's a MAC-48 address or not.
  *
  * @param {Number} inputString
- * @return {Number}
+ * @return {Boolean}
  *
  * @example
  * For 00-1B-63-84-45-E6, the output should be true.
  *
  */
-function isMAC48Address(/* n */) {
-  throw new Error('Not implemented');
+function isMAC48Address(n) {
+  // throw new Error('Not implemented');
+  let check = true;
+  if (`${n}`.split('-').length !== 6) {
+    check = false;
+  }
+  if (check) {
+    const arr = `${n}`.split('-');
+    for (let i = 0; i < arr.length; i++) {
+      const elem = arr[i];
+      if (elem.length !== 2) {
+        check = false;
+        break;
+      }
+      if (!((elem[0] >= '0' && elem[0] <= '9')
+            || (elem[0] >= 'A' && elem[0] <= 'F'))) {
+        check = false;
+        break;
+      }
+      if (!((elem[1] >= '0' && elem[1] <= '9')
+            || (elem[1] >= 'A' && elem[1] <= 'F'))) {
+        check = false;
+        break;
+      }
+    }
+  }
+  return check;
 }
 
 module.exports = isMAC48Address;
+
+/*
+function isMAC48Address(n) {
+  // throw new Error('Not implemented');
+  let check = true;
+  if (`${n}`.split('-').length !== 6) return false;
+  const arr = `${n}`.split('-');
+  arr.forEach((elem) => {
+    if (elem.length !== 2) return false;
+    const tmpNum = parseInt(elem, 16);
+    if (Number.isNaN(tmpNum)) check = false;
+    else if ((tmpNum).toString(16).toUpperCase() !== elem) return false;
+  });
+  return check;
+}
+*/
